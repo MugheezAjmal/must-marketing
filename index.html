@@ -771,9 +771,10 @@
       0%, 100% { opacity: 0.45; transform: scale(1); }
       50%       { opacity: 1;   transform: scale(1.18); }
     }
-    /* Ensure hero children sit above the glow */
-    #hero > * { position: relative; z-index: 1; }
-    .hero-bg-word { z-index: 0 !important; }
+    /* Ensure hero children sit above the glow — exclude the absolutely-positioned bg word */
+    .hero-eyebrow, .hero-h1, .hero-bottom, .scroll-hint { position: relative; z-index: 1; }
+    /* bg word stays absolutely positioned */
+    .hero-bg-word { position: absolute !important; z-index: 0; }
 
     /* Marquee: diamond separator instead of · */
     .marquee-item::after {
