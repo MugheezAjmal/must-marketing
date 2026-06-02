@@ -739,6 +739,56 @@
     /* Selection */
     ::selection { background: var(--charcoal); color: var(--soft-white); }
     .s-light ::selection { background: rgba(43,43,43,0.85); color: var(--soft-white); }
+    /* Inline service includes line */
+    .sol-includes {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-d);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--sw-30);
+      line-height: 1.7;
+    }
+    /* AI section includes line */
+    .ai-section .sol-includes { border-top-color: rgba(248,247,245,0.1); }
+    /* Cards are now much shorter — flex column to push includes to bottom */
+    .sol-card { display: flex; flex-direction: column; }
+    /* Audit card: includes + CTA stacked */
+    .sol-card-audit .sol-card-cta { margin-top: 1.25rem; }
+
+    /* ─── MOBILE OVERRIDES (must follow base styles) ─── */
+    @media (max-width: 900px) {
+      /* Fix cascade: track grids base styles defined after first media query */
+      .track-grid-4,
+      .track-grid-2 { grid-template-columns: 1fr !important; background: transparent; gap: 0; }
+      .track-grid-4 .sol-card,
+      .track-grid-2 .sol-card { border-bottom: 1px solid var(--border-d); }
+      .track-grid-4 .sol-card:last-child,
+      .track-grid-2 .sol-card:last-child { border-bottom: none; }
+
+      /* Why Us table: allow horizontal scroll on mobile */
+      .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .compare-table { min-width: 500px; }
+
+      /* Founder: single column, photo on top */
+      .founder-layout { grid-template-columns: 1fr !important; gap: 0 !important; }
+      .founder-photo-wrap { order: 1; }
+      .founder-text { order: 2; padding-top: 2.5rem; }
+      .founder-photo-frame { aspect-ratio: 3/4 !important; min-height: 300px; max-height: 480px; }
+      .founder-photo-frame img { object-position: center 10%; }
+      .founder-photo-wrap::before { display: none !important; }
+
+      /* Tighten section padding on mobile */
+      .track-wrap { margin-top: 2rem; }
+      .sol-card { padding: 2rem 1.5rem; }
+      .section-inner { padding: 4rem 1.5rem; }
+    }
+
+    @media (max-width: 540px) {
+      .track-num { font-size: 0.48rem; }
+      .track-title { font-size: 1.1rem; }
+      .sol-title { font-size: 1.4rem; }
+    }
   </style>
 </head>
 
@@ -912,8 +962,7 @@
           <div class="founder-photo-frame">
             <img
               src="Branding%20/mugheez.jpg"
-              alt="Mugheez Ajmal — Founder, Must Marketing"
-              onerror="this.closest('.founder-photo-wrap').style.display='none'">
+              alt="Mugheez Ajmal — Founder, Must Marketing">
             <div class="founder-photo-caption">
               <div class="founder-photo-name">Mugheez Ajmal</div>
               <div class="founder-photo-loc">Saint John, NB</div>
@@ -984,24 +1033,7 @@
             <div class="sol-tag">Web Design</div>
             <h3 class="sol-title">Website Design &amp; Build</h3>
             <p class="sol-desc">Custom websites built specifically for your business — no templates, no monthly platform fees, no catch. Own it outright.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">Custom Design &amp; Build</div>
-                <div class="sol-feat-pts">Designed to your brand, built from scratch — not a template</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">No Monthly Renewal Fees</div>
-                <div class="sol-feat-pts">You own your site. No recurring platform lock-in.</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Mobile-First &amp; Fast</div>
-                <div class="sol-feat-pts">Optimized for speed, SEO-ready, and fully responsive</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Done-For-You</div>
-                <div class="sol-feat-pts">Copy, images, contact forms, and launch — all included</div>
-              </div>
-            </div>
+            <p class="sol-includes">Custom design · No renewal fees · Mobile-first · Done-for-you</p>
           </div>
 
           <!-- 02 -->
@@ -1010,20 +1042,7 @@
             <div class="sol-tag">Digital Presence</div>
             <h3 class="sol-title">Digital Presence Solution</h3>
             <p class="sol-desc">Helping businesses show up professionally and consistently online. Your brand deserves to be seen — and we make sure it is.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">Brand-Aligned Content</div>
-                <div class="sol-feat-pts">Custom visuals &amp; copy · Consistent tone across all platforms</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Social Media Management</div>
-                <div class="sol-feat-pts">Strategic posting schedules · Community engagement · Platform optimization</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Video &amp; Visual Production</div>
-                <div class="sol-feat-pts">Reels, promos, brand films · High-quality production</div>
-              </div>
-            </div>
+            <p class="sol-includes">Content creation · Social media · Video production</p>
           </div>
 
           <!-- 03 -->
@@ -1032,24 +1051,7 @@
             <div class="sol-tag">Growth &amp; Advertising</div>
             <h3 class="sol-title">Growth &amp; Advertising Solution</h3>
             <p class="sol-desc">Most businesses run ads without a clear system. We change that. Every campaign is built to convert — not just get views.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">Facebook &amp; Instagram Ads</div>
-                <div class="sol-feat-pts">Audience targeting · Creative strategy · Offer positioning · Ongoing management</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Campaign Strategy &amp; Optimization</div>
-                <div class="sol-feat-pts">Clear goals · A/B creative + audience testing · Continuous improvements</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Landing Pages &amp; Lead Tracking</div>
-                <div class="sol-feat-pts">Conversion-focused pages · Lead capture · Automatic CRM routing</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Performance Monitoring</div>
-                <div class="sol-feat-pts">Cost per lead tracking · ROAS reporting · Scale what works</div>
-              </div>
-            </div>
+            <p class="sol-includes">Facebook &amp; Instagram ads · Landing pages · Lead tracking · Performance reporting</p>
           </div>
 
           <!-- 04 -->
@@ -1058,24 +1060,7 @@
             <div class="sol-tag">Client Growth System</div>
             <h3 class="sol-title">Client Growth System</h3>
             <p class="sol-desc">A backend automation system that manages leads, messages, bookings and follow-ups automatically — so you focus on running your business.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">Unified Inbox</div>
-                <div class="sol-feat-pts">SMS, Facebook, Instagram, Email — all in one place</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Online Booking &amp; Scheduling</div>
-                <div class="sol-feat-pts">Automatic confirmations · Reminder messages · Fewer no-shows</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Automated Follow-Ups</div>
-                <div class="sol-feat-pts">Form submissions · Missed calls · Unanswered quotes · Review requests</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Lead &amp; Job Tracking (CRM)</div>
-                <div class="sol-feat-pts">New Inquiry → Contacted → Booked → Completed</div>
-              </div>
-            </div>
+            <p class="sol-includes">Unified inbox · Online booking · Automated follow-ups · CRM</p>
           </div>
 
         </div>
@@ -1108,16 +1093,7 @@
             </div>
             <h3 class="sol-title">Free AI Audit</h3>
             <p class="sol-desc">Not sure if AI applies to your business? Book a free 30-minute call and we'll show you exactly where automation can save you time and money — no pitch, no pressure.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">What We Review</div>
-                <div class="sol-feat-pts">Your current workflow · Repetitive tasks · Customer touchpoints · Missed follow-ups</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">What You Walk Away With</div>
-                <div class="sol-feat-pts">A clear map of where AI can help your specific business — in plain English</div>
-              </div>
-            </div>
+            <p class="sol-includes">Your workflow · Repetitive tasks · Missed follow-ups · Plain-English findings</p>
             <div class="sol-card-cta">
               <a href="tel:5066398499" class="btn-primary">Book a Call →</a>
             </div>
@@ -1129,24 +1105,7 @@
             <div class="sol-tag">AI &amp; Automation</div>
             <h3 class="sol-title">AI Workflows &amp; Automation</h3>
             <p class="sol-desc">Custom AI systems built into your business — not generic tools. Lead follow-up, appointment booking, customer comms, internal ops.</p>
-            <div class="sol-features">
-              <div class="sol-feat">
-                <div class="sol-feat-name">Lead &amp; Follow-Up Automation</div>
-                <div class="sol-feat-pts">Instant responses · Nurture sequences · No lead falls through the cracks</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Appointment &amp; Booking Flows</div>
-                <div class="sol-feat-pts">AI-powered scheduling with reminders and confirmations</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Customer Communication</div>
-                <div class="sol-feat-pts">Automated SMS &amp; email flows that feel personal, not robotic</div>
-              </div>
-              <div class="sol-feat">
-                <div class="sol-feat-name">Internal Operations</div>
-                <div class="sol-feat-pts">Document workflows · Reporting · Team automations</div>
-              </div>
-            </div>
+            <p class="sol-includes">Lead automation · Booking flows · Customer comms · Internal ops</p>
           </div>
 
         </div>
