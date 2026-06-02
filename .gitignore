@@ -3,3 +3,16 @@ temporary screenshots/
 package-lock.json
 sc-*.mjs
 screenshot-*.mjs
+
+# Local Netlify folder
+.netlify
+
+# Outreach system — secrets and generated files
+outreach/.env
+outreach/credentials.json
+outreach/token.json
+outreach/outreach.db
+outreach/exports/
+outreach/__pycache__/
+outreach/**/__pycache__/
+outreach/**/*.pyc

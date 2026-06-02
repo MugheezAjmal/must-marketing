@@ -537,12 +537,130 @@
       .form-row { grid-template-columns: 1fr; }
       footer { padding: 2rem 1.5rem; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+      .founder-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .founder-photo-wrap::before { display: none; }
+      .founder-photo-frame { aspect-ratio: 4/3; }
     }
 
     @media (max-width: 540px) {
       .port-card { width: 280px; height: 240px; }
       .port-card.port-video { width: 427px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ─── FOUNDER ─── */
+    .founder-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .founder-photo-wrap {
+      position: relative;
+    }
+    .founder-photo-frame {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .founder-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.08) 40%, transparent 68%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .founder-photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 15%;
+      display: block;
+      filter: grayscale(6%) contrast(1.03);
+      transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    }
+    .founder-photo-frame:hover img {
+      transform: scale(1.03);
+      filter: grayscale(0%) contrast(1.0);
+    }
+    /* offset decorative border */
+    .founder-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem; left: -1.5rem;
+      width: 100%; height: 100%;
+      border: 1px solid rgba(248,247,245,0.1);
+      pointer-events: none;
+      z-index: -1;
+    }
+    /* bottom caption strip */
+    .founder-photo-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1rem;
+    }
+    .founder-photo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--soft-white); line-height: 1.2;
+    }
+    .founder-photo-loc {
+      font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(248,247,245,0.4);
+      white-space: nowrap;
+    }
+    .founder-text { display: flex; flex-direction: column; }
+    .founder-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 4.5vw, 4.5rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--soft-white);
+      margin-bottom: 0.75rem;
+    }
+    .founder-name em { font-style: italic; }
+    .founder-role {
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sw-30);
+      margin-bottom: 2.75rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .founder-role::after {
+      content: ''; display: block; width: 36px; height: 1px; background: var(--sw-30);
+    }
+    .founder-bio {
+      font-size: 0.83rem; line-height: 1.95;
+      color: var(--sw-60); max-width: 420px;
+      margin-bottom: 2.25rem;
+    }
+    .founder-quote {
+      padding: 1.4rem 1.75rem;
+      border-left: 2px solid rgba(248,247,245,0.14);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-style: italic;
+      font-weight: 300; line-height: 1.65;
+      color: rgba(248,247,245,0.42);
+    }
+    .founder-divider {
+      width: 100%; height: 1px;
+      background: var(--border-d);
+      margin: 2.25rem 0;
+    }
+    .founder-meta {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .founder-meta-item {
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .founder-meta-label {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--sw-30);
+    }
+    .founder-meta-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0rem; color: var(--soft-white);
     }
 
     /* Selection */
@@ -689,6 +807,78 @@
             <div class="means-item"><div class="dot"></div> Stronger brand presence</div>
             <div class="means-item"><div class="dot"></div> Higher ROI</div>
             <div class="means-item"><div class="dot"></div> One connected system — not multiple agencies</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FOUNDER ═══════════════════════ -->
+  <section id="founder" style="background:var(--charcoal-mid);position:relative;overflow:hidden;">
+
+    <!-- Ghost word backdrop -->
+    <div aria-hidden="true" style="
+      position:absolute;top:50%;right:-3%;
+      transform:translateY(-50%);
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(140px,22vw,340px);
+      font-weight:700;line-height:1;
+      color:rgba(248,247,245,0.018);
+      letter-spacing:-0.05em;
+      pointer-events:none;user-select:none;
+      white-space:nowrap;">MUGHEEZ</div>
+
+    <div class="section-inner">
+      <div class="founder-layout">
+
+        <!-- ── Photo column ── -->
+        <div class="founder-photo-wrap fu">
+          <div class="founder-photo-frame">
+            <img
+              src="Branding%20/mugheez.jpg"
+              alt="Mugheez Ajmal — Founder, Must Marketing"
+              onerror="this.closest('.founder-photo-wrap').style.display='none'">
+            <div class="founder-photo-caption">
+              <div class="founder-photo-name">Mugheez Ajmal</div>
+              <div class="founder-photo-loc">Saint John, NB</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Text column ── -->
+        <div class="founder-text">
+          <div class="section-label fu" style="color:var(--soft-white);">The Founder</div>
+
+          <h2 class="founder-name fu d1">
+            Built by<br><em>Someone Who</em><br>Gives a Damn.
+          </h2>
+
+          <div class="founder-role fu d2">Mugheez Ajmal · Founder &amp; Creative Director</div>
+
+          <p class="founder-bio fu d3">
+            I'm a Saint John local. I started Must Marketing because I kept watching talented small businesses get left behind — not for lack of effort, but because the agencies they hired treated them like a line item. I built this to be different: one person accountable for your growth, not a rotating roster of account managers.
+          </p>
+
+          <div class="founder-quote fu d4">
+            "I don't just run campaigns. I build the connected system that makes every campaign matter."
+          </div>
+
+          <div class="founder-divider fu d5"></div>
+
+          <div class="founder-meta fu d5">
+            <div class="founder-meta-item">
+              <span class="founder-meta-label">Based in</span>
+              <span class="founder-meta-val">Saint John, NB</span>
+            </div>
+            <div class="founder-meta-item">
+              <span class="founder-meta-label">Focus</span>
+              <span class="founder-meta-val">Local Business Growth</span>
+            </div>
+            <div class="founder-meta-item">
+              <span class="founder-meta-label">Philosophy</span>
+              <span class="founder-meta-val">Systems Over Shortcuts</span>
+            </div>
           </div>
         </div>
 
