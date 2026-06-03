@@ -520,7 +520,14 @@
         font-family: 'Montserrat', sans-serif; opacity: 0.6;
       }
 
-      #hero { padding: 7.5rem 1.5rem 3.5rem; }
+      #hero {
+        justify-content: flex-start !important;
+        padding-top: 47svh;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-bottom: 4rem;
+        min-height: 100svh;
+      }
       .hero-h1 { font-size: clamp(2.8rem, 12vw, 5rem); max-width: 100%; }
       .hero-bottom { flex-direction: column; align-items: flex-start; }
 
@@ -869,11 +876,13 @@
       .section-inner { padding: 4rem 1.5rem; }
     }
 
+    #hero-network { opacity: 0.85; }
+
     @media (max-width: 640px) {
-      /* Fade network out before text area on mobile */
       #hero-network {
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 62%);
-        mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 62%);
+        opacity: 0.75;
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 47%, transparent 60%);
+        mask-image: linear-gradient(to bottom, black 0%, black 47%, transparent 60%);
       }
     }
 
@@ -925,7 +934,7 @@
 
   <!-- ═══════════════════════ HERO ═══════════════════════ -->
   <section id="hero">
-    <canvas id="hero-network" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.8s ease;"></canvas>
+    <canvas id="hero-network" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
     <div class="hero-bg-word">MUST</div>
 
     <p class="hero-eyebrow fu">Must Marketing</p>
@@ -1701,17 +1710,15 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       let W, H;
+      let NODES = [];
+      const pulses = [];
 
       function resize() {
-        const wasMobile = W < 640;
         W = canvas.width  = canvas.offsetWidth;
         H = canvas.height = canvas.offsetHeight;
-        // Rebuild nodes if breakpoint crossed
-        if ((W < 640) !== wasMobile) {
-          NODES = buildNodes();
-          pulses.length = 0;
-          NODES.forEach(() => pulses.push({ r: 0, a: 0, nextAt: Date.now() + Math.random() * 2000 }));
-        }
+        NODES = buildNodes();
+        pulses.length = 0;
+        NODES.forEach(() => pulses.push({ r: 0, a: 0, nextAt: Date.now() + Math.random() * 2000 + 400 }));
       }
       resize();
       window.addEventListener('resize', resize, { passive: true });
@@ -1743,8 +1750,6 @@
           { label: 'Analytics',  rx: 0.93, ry: 0.72 },
         ];
       }
-      let NODES = buildNodes();
-
       // Directed connections [from, to]
       const EDGES = [
         [0, 3], // Content → Website
@@ -1760,11 +1765,6 @@
 
       // Per-edge draw-in progress (0→1)
       const edgeProg = EDGES.map(() => 0);
-      // Per-node pulse state
-      const pulses = NODES.map(() => ({
-        r: 0, a: 0,
-        nextAt: Date.now() + Math.random() * 3000 + 500
-      }));
       // Traveling packets
       const packets = [];
       let packetsSeeded = false;
@@ -1810,8 +1810,6 @@
         if (allDone && !packetsSeeded) {
           packetsSeeded = true;
           seedPackets();
-          // Fade canvas in
-          canvas.style.opacity = isMobile ? '0.45' : '0.85';
         }
 
         // ── Draw edges ──────────────────────────────────────────────
@@ -1869,7 +1867,7 @@
 
         // ── Draw nodes ───────────────────────────────────────────────
         const now = Date.now();
-        const labelAlpha = Math.max(0, Math.min(1, elapsed - 2.2)) * 0.38;
+        const labelAlpha = Math.max(0, Math.min(1, elapsed - 2.2)) * (isMobile ? 0.58 : 0.38);
 
         NODES.forEach((node, i) => {
           const x = nx(node), y = ny(node);
@@ -1915,8 +1913,8 @@
           ctx.shadowBlur = 0;
 
           // Label
-          if (labelAlpha > 0.01 && !isMobile) {
-            ctx.font = '7.5px Montserrat, sans-serif';
+          if (labelAlpha > 0.01) {
+            ctx.font = `${isMobile ? 9 : 7.5}px Montserrat, sans-serif`;
             ctx.fillStyle = `rgba(248,247,245,${labelAlpha})`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'top';
@@ -1925,12 +1923,10 @@
         });
       }
 
-      requestAnimationFrame(frame);
-
-      // Pause when tab hidden (battery saving)
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) cancelAnimationFrame(raf);
-        else requestAnimationFrame(frame);
+      // Fade canvas in on first draw tick (browser throttles rAF natively when hidden)
+      requestAnimationFrame(function kickstart() {
+        resize(); // ensure canvas is sized before first draw
+        requestAnimationFrame(frame);
       });
     })();
 
