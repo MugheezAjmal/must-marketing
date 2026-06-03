@@ -869,6 +869,14 @@
       .section-inner { padding: 4rem 1.5rem; }
     }
 
+    @media (max-width: 640px) {
+      /* Fade network out before text area on mobile */
+      #hero-network {
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 62%);
+        mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 62%);
+      }
+    }
+
     @media (max-width: 540px) {
       .track-num { font-size: 0.48rem; }
       .track-title { font-size: 1.1rem; }
@@ -1695,23 +1703,47 @@
       let W, H;
 
       function resize() {
+        const wasMobile = W < 640;
         W = canvas.width  = canvas.offsetWidth;
         H = canvas.height = canvas.offsetHeight;
+        // Rebuild nodes if breakpoint crossed
+        if ((W < 640) !== wasMobile) {
+          NODES = buildNodes();
+          pulses.length = 0;
+          NODES.forEach(() => pulses.push({ r: 0, a: 0, nextAt: Date.now() + Math.random() * 2000 }));
+        }
       }
       resize();
       window.addEventListener('resize', resize, { passive: true });
 
-      // Node definitions — positions as fraction of canvas W/H
-      const NODES = [
-        { label: 'Content',     rx: 0.16, ry: 0.12 },
-        { label: 'Social',      rx: 0.54, ry: 0.08 },
-        { label: 'Paid Ads',    rx: 0.83, ry: 0.19 },
-        { label: 'Website',     rx: 0.43, ry: 0.35, hub: true },
-        { label: 'CRM',         rx: 0.74, ry: 0.44 },
-        { label: 'Leads',       rx: 0.28, ry: 0.54 },
-        { label: 'Follow-ups',  rx: 0.58, ry: 0.65 },
-        { label: 'Analytics',   rx: 0.84, ry: 0.70 },
-      ];
+      // Node positions — desktop: right half. mobile: top strip.
+      function buildNodes() {
+        if (W < 640) {
+          // Mobile: spread full width, all in top 38% of canvas height
+          return [
+            { label: 'Content',    rx: 0.10, ry: 0.09 },
+            { label: 'Social',     rx: 0.50, ry: 0.06 },
+            { label: 'Paid Ads',   rx: 0.88, ry: 0.11 },
+            { label: 'Website',    rx: 0.44, ry: 0.22, hub: true },
+            { label: 'CRM',        rx: 0.82, ry: 0.27 },
+            { label: 'Leads',      rx: 0.18, ry: 0.30 },
+            { label: 'Follow-ups', rx: 0.60, ry: 0.34 },
+            { label: 'Analytics',  rx: 0.88, ry: 0.37 },
+          ];
+        }
+        // Desktop: right half only (rx 0.48–0.96)
+        return [
+          { label: 'Content',    rx: 0.52, ry: 0.11 },
+          { label: 'Social',     rx: 0.72, ry: 0.07 },
+          { label: 'Paid Ads',   rx: 0.94, ry: 0.18 },
+          { label: 'Website',    rx: 0.65, ry: 0.33, hub: true },
+          { label: 'CRM',        rx: 0.90, ry: 0.45 },
+          { label: 'Leads',      rx: 0.50, ry: 0.55 },
+          { label: 'Follow-ups', rx: 0.74, ry: 0.66 },
+          { label: 'Analytics',  rx: 0.93, ry: 0.72 },
+        ];
+      }
+      let NODES = buildNodes();
 
       // Directed connections [from, to]
       const EDGES = [
